@@ -1,1 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>KHIT CSE AI Assistant</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f0f4f8;
+      padding: 30px;
+    }
+    .container {
+      max-width: 600px;
+      margin: auto;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    #chatBox {
+      height: 300px;
+      overflow-y: auto;
+      background: #e6f7ff;
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 8px;
+    }
+    input, button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      font-size: 16px;
+    }
+    button {
+      background: #0078D4;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    .user { font-weight: bold; color: #333; }
+    .ai { color: #0078D4; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🤖 KHIT CSE AI Assistant</h1>
+    <div id="chatBox"></div>
+    <input type="text" id="userInput" placeholder="Ask about full stack, placement, hackathons...">
+    <button onclick="sendMessage()">Send</button>
+  </div>
 
+  <script>
+    function sendMessage() {
+      const input = document.getElementById("userInput").value.trim();
+      if (!input) return;
+
+      const chatBox = document.getElementById("chatBox");
+      chatBox.innerHTML += `<p class="user">You: ${input}</p>`;
+
+      fetch("/ask", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: input })
+      })
+      .then(res => res.json())
+      .then(data => {
+        chatBox.innerHTML += `<p class="ai">AI: ${data.reply}</p>`;
+        document.getElementById("userInput").value = "";
+        chatBox.scrollTop = chatBox.scrollHeight;
+      });
+    }
+  </script>
+</body>
+</html>
