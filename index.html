@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+   <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -57,7 +57,7 @@
       const chatBox = document.getElementById("chatBox");
       chatBox.innerHTML += `<p class="user">You: ${input}</p>`;
 
-      fetch("https://school-35l6.vercel.app/ask", {
+      fetch("/ask", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: input })
