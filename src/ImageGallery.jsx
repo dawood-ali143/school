@@ -3,10 +3,10 @@ import { motion, AnimatePresence } from "framer-motion";
 
 export default function ImageGallery() {
   const images = [
-    { src: "/img11.jpg", alt: "Image 11", caption: "Image 11 caption" },
-    { src: "/img12.jpg", alt: "Image 12", caption: "Image 12 caption" },
-    { src: "/img13.jpg", alt: "Image 13", caption: "Image 13 caption" },
-    { src: "/img14.jpg", alt: "Image 14", caption: "Image 14 caption" },
+    { src: "/img11.png", alt: "Image 11", caption: "Image 11 caption" },
+    { src: "/img12.png", alt: "Image 12", caption: "Image 12 caption" },
+    { src: "/img13.png", alt: "Image 13", caption: "Image 13 caption" },
+    { src: "/img14.png", alt: "Image 14", caption: "Image 14 caption" },
   ];
 
   const [open, setOpen] = useState(false);
