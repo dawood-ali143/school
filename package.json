@@ -1,5 +1,5 @@
 {
-  "name": "image-gallery",
+  "name": "image-3d-gallery",
   "version": "1.0.0",
   "private": true,
   "scripts": {
@@ -8,9 +8,12 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@react-three/drei": "^10.12.3",
+    "@react-three/fiber": "^9.2.0",
     "framer-motion": "^11.0.0",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "three": "^0.160.0"
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^4.2.0",
