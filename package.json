@@ -23,3 +23,10 @@
     "vite": "^5.0.0"
   }
 }
+"homepage": "https://dawood-ali143.github.io/school",
+"scripts": {
+  "dev": "vite",
+  "build": "vite build",
+  "preview": "vite preview",
+  "deploy": "gh-pages -d dist"
+}
