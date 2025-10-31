@@ -35,70 +35,49 @@ export default function ImageGallery() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
-      <header className="max-w-5xl mx-auto mb-6">
-        <h1 className="text-3xl font-semibold mb-1">Image gallery — img11 to img14</h1>
-        <p className="text-sm text-gray-600">Responsive masonry grid with lightbox. Click any image to open.</p>
+    <div className="ui-overlay pointer-auto">
+      <header className="max-w-5xl mx-auto mt-6 p-4 text-white">
+        <h1 className="text-2xl sm:text-3xl font-semibold">3D Rolling Image Wall</h1>
+        <p className="text-sm text-gray-200/80">Floating 3D wall in the background — click thumbnails to open.</p>
       </header>
 
-      <main className="max-w-5xl mx-auto">
-        <div className="columns-1 sm:columns-2 lg:columns-3 gap-4 space-y-4">
+      <main className="max-w-5xl mx-auto p-4">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
           {images.map((img, i) => (
-            <div key={img.src} className="break-inside-avoid overflow-hidden rounded-2xl shadow-md bg-white ring-1 ring-gray-100">
-              <button onClick={() => openAt(i)} className="group w-full text-left" aria-label={`Open ${img.alt} in lightbox`}>
-                <div className="relative">
-                  <img src={img.src} alt={img.alt} loading="lazy" className="w-full h-auto transform transition-transform duration-300 group-hover:scale-105" />
-                  <div className="absolute left-0 bottom-0 right-0 bg-gradient-to-t from-black/50 to-transparent p-3 opacity-0 group-hover:opacity-100 transition-opacity">
-                    <div className="text-white text-sm font-medium">{img.caption}</div>
-                  </div>
-                </div>
+            <div key={i} className="rounded-xl overflow-hidden shadow-lg ring-1 ring-white/10 bg-white/5">
+              <button onClick={() => openAt(i)} className="w-full h-full block" aria-label={`Open ${img.alt}`}>
+                <img src={img.src} alt={img.alt} className="w-full h-40 object-cover transform hover:scale-105 transition" />
               </button>
-              <div className="p-3 flex items-center justify-between">
-                <div className="text-xs text-gray-500">{img.alt}</div>
-                <div className="flex gap-2">
-                  <a href={img.src} target="_blank" rel="noreferrer" className="text-xs underline">Open</a>
-                  <a href={img.src} download className="text-xs underline">Download</a>
-                </div>
-              </div>
             </div>
           ))}
         </div>
-
-        <AnimatePresence>
-          {open && (
-            <motion.div
-              className="fixed inset-0 z-50 flex items-center justify-center p-6"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              aria-modal="true"
-              role="dialog"
-            >
-              <div className="absolute inset-0 bg-black/70" onClick={() => setOpen(false)} />
-              <motion.div className="relative max-w-4xl w-full max-h-[90vh] bg-transparent" initial={{ y: 20, scale: 0.98 }} animate={{ y: 0, scale: 1 }} exit={{ y: 20, scale: 0.98 }}>
-                <div className="flex items-center justify-between mb-2">
-                  <div className="text-sm text-white/90">{images[index].caption}</div>
-                  <div className="flex gap-2">
-                    <a href={images[index].src} target="_blank" rel="noreferrer" className="text-sm text-white/90 underline">Open</a>
-                    <a href={images[index].src} download className="text-sm text-white/90 underline">Download</a>
-                    <button onClick={() => setOpen(false)} className="text-white/90 text-sm px-2 py-1 bg-white/10 rounded">Close</button>
-                  </div>
-                </div>
-                <div className="relative w-full h-[70vh] flex items-center justify-center">
-                  <button onClick={prev} className="absolute left-2 top-1/2 -translate-y-1/2 p-2 rounded-full bg-white/10 hover:bg-white/20">◀</button>
-                  <img src={images[index].src} alt={images[index].alt} className="max-h-full max-w-full rounded-lg shadow-lg" />
-                  <button onClick={next} className="absolute right-2 top-1/2 -translate-y-1/2 p-2 rounded-full bg-white/10 hover:bg-white/20">▶</button>
-                </div>
-                <div className="mt-3 text-xs text-gray-200 text-center">Use ← → to navigate, Esc to close</div>
-              </motion.div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-
-        <footer className="mt-8 text-sm text-gray-500 text-center">
-          Drop your images into <code>/public/</code> and update captions in the component as needed.
-        </footer>
       </main>
+
+      {/* Lightbox overlay */}
+      <AnimatePresence>
+        {open && (
+          <motion.div className="fixed inset-0 z-50 flex items-center justify-center p-6" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+            <div className="absolute inset-0 bg-black/80" onClick={() => setOpen(false)} />
+            <motion.div className="relative max-w-4xl w-full max-h-[90vh]" initial={{ y: 20, scale: 0.98 }} animate={{ y: 0, scale: 1 }} exit={{ y: 20, scale: 0.98 }}>
+              <div className="flex items-center justify-between mb-2 text-white">
+                <div className="text-sm">{images[index].caption}</div>
+                <div className="flex gap-2">
+                  <a href={images[index].src} target="_blank" rel="noreferrer" className="underline">Open</a>
+                  <a href={images[index].src} download className="underline">Download</a>
+                  <button onClick={() => setOpen(false)} className="px-2 py-1 bg-white/10 rounded">Close</button>
+                </div>
+              </div>
+
+              <div className="relative w-full h-[70vh] flex items-center justify-center">
+                <button onClick={prev} className="absolute left-2 top-1/2 -translate-y-1/2 p-2 rounded-full bg-white/10">◀</button>
+                <img src={images[index].src} alt={images[index].alt} className="max-h-full max-w-full rounded-lg shadow-lg" />
+                <button onClick={next} className="absolute right-2 top-1/2 -translate-y-1/2 p-2 rounded-full bg-white/10">▶</button>
+              </div>
+              <div className="mt-3 text-xs text-gray-200 text-center">Use ← → to navigate, Esc to close</div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
