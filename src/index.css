@@ -2,6 +2,28 @@
 @tailwind components;
 @tailwind utilities;
 
-* {
-  transition: all 0.2s ease-in-out;
+/* Ensure canvas covers full screen behind UI */
+html, body, #root {
+  height: 100%;
+}
+.canvas-fullscreen {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+}
+
+/* overlay container for UI above the canvas */
+.ui-overlay {
+  position: relative;
+  z-index: 10; /* above canvas */
+}
+
+/* prevent the canvas from capturing pointer events where UI should be interactive */
+.pointer-ignore {
+  pointer-events: none;
+}
+
+/* allow interaction for UI elements */
+.pointer-auto {
+  pointer-events: auto;
 }
